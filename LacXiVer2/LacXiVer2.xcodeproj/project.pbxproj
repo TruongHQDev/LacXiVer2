@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7B448F9F2B5BBFAD0088157E /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B448F9E2B5BBFAD0088157E /* SettingView.swift */; };
 		7B448FA12B5BC0690088157E /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B448FA02B5BC0690088157E /* TutorialView.swift */; };
+		7B448FA32B5BD7850088157E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B448FA22B5BD7850088157E /* Extensions.swift */; };
 		7BB02B612B5999E400A1B0AA /* LacXiVer2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB02B602B5999E400A1B0AA /* LacXiVer2App.swift */; };
 		7BB02B632B5999E400A1B0AA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB02B622B5999E400A1B0AA /* ContentView.swift */; };
 		7BB02B652B5999E700A1B0AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7BB02B642B5999E700A1B0AA /* Assets.xcassets */; };
@@ -39,6 +40,7 @@
 /* Begin PBXFileReference section */
 		7B448F9E2B5BBFAD0088157E /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		7B448FA02B5BC0690088157E /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
+		7B448FA22B5BD7850088157E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7BB02B5D2B5999E400A1B0AA /* LacXiVer2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LacXiVer2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BB02B602B5999E400A1B0AA /* LacXiVer2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LacXiVer2App.swift; sourceTree = "<group>"; };
 		7BB02B622B5999E400A1B0AA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -102,7 +104,8 @@
 			isa = PBXGroup;
 			children = (
 				7BB02B602B5999E400A1B0AA /* LacXiVer2App.swift */,
-				7BB02B8D2B599CA700A1B0AA /* VIews */,
+				7BB02B8D2B599CA700A1B0AA /* Views */,
+				7B448FA22B5BD7850088157E /* Extensions.swift */,
 				7BB02B642B5999E700A1B0AA /* Assets.xcassets */,
 				7BB02B662B5999E700A1B0AA /* LacXiVer2.entitlements */,
 				7BB02B672B5999E700A1B0AA /* Preview Content */,
@@ -135,7 +138,7 @@
 			path = LacXiVer2UITests;
 			sourceTree = "<group>";
 		};
-		7BB02B8D2B599CA700A1B0AA /* VIews */ = {
+		7BB02B8D2B599CA700A1B0AA /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				7BB02B622B5999E400A1B0AA /* ContentView.swift */,
@@ -143,7 +146,7 @@
 				7B448F9E2B5BBFAD0088157E /* SettingView.swift */,
 				7B448FA02B5BC0690088157E /* TutorialView.swift */,
 			);
-			path = VIews;
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -277,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BB02B632B5999E400A1B0AA /* ContentView.swift in Sources */,
+				7B448FA32B5BD7850088157E /* Extensions.swift in Sources */,
 				7B448F9F2B5BBFAD0088157E /* SettingView.swift in Sources */,
 				7BB02B612B5999E400A1B0AA /* LacXiVer2App.swift in Sources */,
 				7B448FA12B5BC0690088157E /* TutorialView.swift in Sources */,

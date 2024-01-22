@@ -14,6 +14,7 @@ struct ContentView: View {
             NavigationView {
                 VStack {
                     Text("Lắc Xì")
+                        .font(.azuki(.regular, size: 50))
                     Text("by Trường aka hqt198")
                     NavigationLink(destination: ShakeScreen()) {
                         Text("Start")

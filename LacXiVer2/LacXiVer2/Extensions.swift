@@ -41,3 +41,47 @@ extension View {
         self.modifier(DeviceShakeViewModifier(action: action))
     }
 }
+
+extension Font {
+    enum AzukiFont {
+        case regular
+        case custom(String)
+        
+        var value: String {
+            switch self {
+            case .regular:
+                return "UTM-Azuki"
+            case .custom(let name):
+                return name
+            }
+        }
+    }
+    
+    enum TektonFont {
+        case regular
+        case medium
+        case bold
+        case custom(String)
+        
+        var value: String {
+            switch self {
+            case .regular:
+                return "TektonPro-Regular"
+            case .medium:
+                return "TektonPro-Medium"
+            case .bold:
+                return "TektonPro-Bold"
+            case .custom(let name):
+                return name
+            }
+        }
+    }
+    
+    static func titleFont(_ type: AzukiFont, size: CGFloat = 15) -> Font {
+        return .custom(type.value, size: size)
+    }
+    
+    static func appFont(_ type: TektonFont, size: CGFloat = 15) -> Font {
+        return .custom(type.value, size: size)
+    }
+}

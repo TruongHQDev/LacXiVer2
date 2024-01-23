@@ -11,6 +11,10 @@ struct ShakeScreen: View {
     @State private var viewModel = ViewModel()
     private let listText: [String] = ["Không có gì!", "Có nha", "Còn khuya"]
     
+    @State var isGotMoney = false
+    @State var moneyString = ""
+    @State var lixiType: LiXiType = .text
+    
     var body: some View {
         GeometryReader { geo in
             ZStack {
@@ -19,15 +23,27 @@ struct ShakeScreen: View {
                     .scaledToFill()
                     .frame(width: geo.size.width, height: geo.size.height)
                     .clipped()
+                
                 VStack {
+                    Spacer()
+                        .frame(height: 70)
                     Text("Lắc Xì")
-                    Text("by hqt198")
+                        .font(.titleFont(.regular, size: 70))
+                   Spacer()
+                }
+                
+                if isGotMoney {
+                    CongratulationView(moneyString: "\(moneyString)")
+                        .frame(width: geo.size.width - 50, height: 300, alignment: .center)
+                        .offset(y: -50)
+                    
+                } else {
                     ZStack {
                         
                     }
                     .frame(width: geo.size.width / 3, height: geo.size.height / 3)
                     .background(Color.blue)
-                    
+                    .offset(y: -20)
                 }
             }
             .background(Color.yellow)
@@ -38,18 +54,29 @@ struct ShakeScreen: View {
         .ignoresSafeArea()
         .background(Color.green)
         .onShake {
-            print("Device shaken!")
-            viewModel.getMoney(type: .tetDong)
+            moneyString = viewModel.getMoney(type: lixiType, 0, 0, listText)
+            isGotMoney = true
 //            viewModel.getMoney(type: .text, 0, 0, listText)
 //            viewModel.getMoney(type: .number, 0, 100)
         }
     }
 }
 
-#Preview {
-    ShakeScreen()
+struct CongratulationView: View {
+    @State var moneyString: String
+    
+    var body: some View {
+        GeometryReader { geo in
+            ZStack {
+                Text("\(moneyString)")
+                    .font(.titleFont(.regular, size: 30))
+                    .multilineTextAlignment(.center)
+            }
+            .frame(width: geo.size.width, height: geo.size.height, alignment: .center)
+            .background(Color.pink)
+        }
+    }
 }
-
 
 extension ShakeScreen {
     @Observable
@@ -77,22 +104,33 @@ extension ShakeScreen {
         
         private func randomVietnameseDong(from minValue: Int, to maxValue: Int) -> String { //A multiple of 10.
             let randomInt = Int.random(in: minValue...maxValue)
-            print("VietnamDong: \(randomInt * 10000)đ")
-            return "\(randomInt)"
+            let money = randomInt * 10000
+            let text = "\(convertCurrency(money: Double(money)))đ"
+            return "\(text)"
             
         }
         
         private func randomNumber(from minValue: Int, to maxValue: Int) -> String {
             let randomInt = Int.random(in: minValue...maxValue)
-            print("Number: \(randomInt)$")
             return "\(randomInt)"
         }
         
         private func randomText(list: [String]) -> String {
             let randomInt = Int.random(in: 0..<list.count)
             let text = list[randomInt]
-            print("Text: \(text)")
             return text
+        }
+        
+        private func convertCurrency(money: Double) -> String {
+            let currencyFormatter = NumberFormatter()
+            currencyFormatter.usesGroupingSeparator = true
+            currencyFormatter.numberStyle = .decimal
+            // localize to your grouping and decimal separator
+            currencyFormatter.locale = Locale.current
+
+            // We'll force unwrap with the !, if you've got defined data you may need more error checking
+            let priceString = currencyFormatter.string(from: NSNumber(value: money))!
+            return priceString
         }
     }
 }

@@ -11,6 +11,7 @@
 		7B0B152F2B5E814600C6F3B0 /* TektonPro-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7B0B152C2B5E814600C6F3B0 /* TektonPro-Medium.ttf */; };
 		7B0B15302B5E814600C6F3B0 /* TektonPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7B0B152D2B5E814600C6F3B0 /* TektonPro-Bold.ttf */; };
 		7B0B15312B5E814600C6F3B0 /* TektonPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7B0B152E2B5E814600C6F3B0 /* TektonPro-Regular.ttf */; };
+		7B19D7262B612754005BF805 /* coinDrop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7B19D7252B612754005BF805 /* coinDrop.mp3 */; };
 		7B448F9F2B5BBFAD0088157E /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B448F9E2B5BBFAD0088157E /* SettingView.swift */; };
 		7B448FA12B5BC0690088157E /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B448FA02B5BC0690088157E /* TutorialView.swift */; };
 		7B448FA32B5BD7850088157E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B448FA22B5BD7850088157E /* Extensions.swift */; };
@@ -47,6 +48,7 @@
 		7B0B152C2B5E814600C6F3B0 /* TektonPro-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TektonPro-Medium.ttf"; sourceTree = "<group>"; };
 		7B0B152D2B5E814600C6F3B0 /* TektonPro-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TektonPro-Bold.ttf"; sourceTree = "<group>"; };
 		7B0B152E2B5E814600C6F3B0 /* TektonPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TektonPro-Regular.ttf"; sourceTree = "<group>"; };
+		7B19D7252B612754005BF805 /* coinDrop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = coinDrop.mp3; sourceTree = "<group>"; };
 		7B448F9E2B5BBFAD0088157E /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		7B448FA02B5BC0690088157E /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		7B448FA22B5BD7850088157E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				7BB02B8D2B599CA700A1B0AA /* Views */,
 				7B448FA22B5BD7850088157E /* Extensions.swift */,
 				7BB02B642B5999E700A1B0AA /* Assets.xcassets */,
+				7B19D7252B612754005BF805 /* coinDrop.mp3 */,
 				7B0B15322B5E816E00C6F3B0 /* Font */,
 				7BB02B662B5999E700A1B0AA /* LacXiVer2.entitlements */,
 				7BB02B672B5999E700A1B0AA /* Preview Content */,
@@ -280,6 +283,7 @@
 				7B0B15312B5E814600C6F3B0 /* TektonPro-Regular.ttf in Resources */,
 				7BB02B692B5999E700A1B0AA /* Preview Assets.xcassets in Resources */,
 				7B0B152A2B5E79E300C6F3B0 /* UTM-Azuki.ttf in Resources */,
+				7B19D7262B612754005BF805 /* coinDrop.mp3 in Resources */,
 				7BB02B652B5999E700A1B0AA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -470,9 +474,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LacXiVer2/Preview Content\"";
+				DEVELOPMENT_TEAM = CQ5Q6PHYST;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LacXiVer2/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app need to capture image to show in app";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We want to save congratulation image";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -483,7 +490,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
@@ -507,9 +514,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LacXiVer2/Preview Content\"";
+				DEVELOPMENT_TEAM = CQ5Q6PHYST;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = LacXiVer2/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app need to capture image to show in app";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "We want to save congratulation image";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -520,7 +530,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;

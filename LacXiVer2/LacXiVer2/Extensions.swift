@@ -88,6 +88,10 @@ extension Font {
 
 extension Color {
     public static let appDarkGreen = Color(hex: "#43766C")
+    public static let appDarkBrown = Color(hex: "#76453B")
+    public static let appLightBrown = Color(hex: "#B19470")
+    public static let appBeige = Color(hex: "#F8FAE5")
+    
     
     init(hex: String) {
         var cleanHexCode = hex.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -101,5 +105,21 @@ extension Color {
         let greenValue = Double((rgb >> 8) & 0xFF) / 255.0
         let blueValue = Double(rgb & 0xFF) / 255.0
         self.init(red: redValue, green: greenValue, blue: blueValue)
+    }
+}
+
+extension View {
+    func snapshot() -> UIImage? {
+        guard let keyWindow = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first,
+            let view = keyWindow.rootViewController?.view else {
+            return nil
+        }
+
+        UIGraphicsBeginImageContextWithOptions(view.bounds.size, true, keyWindow.screen.scale)
+        view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return image
     }
 }

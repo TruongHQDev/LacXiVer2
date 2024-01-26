@@ -6,14 +6,27 @@
 //
 
 import SwiftUI
+import PhotosUI
+import AVKit
 
 struct ShakeScreen: View {
     @State private var viewModel = ViewModel()
-    private let listText: [String] = ["Không có gì!", "Có nha", "Còn khuya"]
+    private let listText: [String] = ["Không có gì!", "20.000đ", "50.000đ", "60.000đ","100.000đ", "Lại đi!"]
     
     @State var isGotMoney = false
     @State var moneyString = ""
     @State var lixiType: LiXiType = .text
+    @State private var showCamera = false
+    @State private var selectedImage: UIImage?
+    @State var isShaked = false
+    @State private var _up = true
+    @State private var activeImageIndex = 0
+    @State private var startTimer = false
+    @State var isShowTool = false
+    
+    let timer = Timer.publish(every: 0.15, on: .main, in: .common).autoconnect()
+    let myShots = ["charac-1", "charac-2", "charac-3", "charac-4", "charac-5", "charac-6", "charac-7", "charac-8"]
+    @State var audioPlayer: AVAudioPlayer!
     
     var body: some View {
         GeometryReader { geo in
@@ -29,57 +42,201 @@ struct ShakeScreen: View {
                         .frame(height: 70)
                     Text("Lắc Xì")
                         .font(.titleFont(.regular, size: 70))
+                        .foregroundColor(.appDarkBrown)
                    Spacer()
                 }
                 
                 if isGotMoney {
-                    CongratulationView(moneyString: "\(moneyString)")
-                        .frame(width: geo.size.width - 50, height: 300, alignment: .center)
-                        .offset(y: -50)
+                    ZStack {
+                        CongratulationView(moneyString: "\(moneyString)", selectedImage: $selectedImage, isShowCamera: $showCamera)
+                            .frame(width: geo.size.width - 20, height: 500, alignment: .center)
+                            .offset(y: -50)
+                        if isShowTool {
+                            HStack (spacing: 40) {
+                                Button {
+                                    isGotMoney = false
+                                    isShaked = false
+                                    selectedImage = nil
+                                } label: {
+                                    Image("refresh")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 50, height: 50)
+                                        .foregroundColor(.appDarkBrown)
+                                }
+                                
+                                
+                                Button(action: {
+                                    self.showCamera.toggle()
+                                }, label: {
+                                    Image("camera")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 50, height: 50)
+                                        .foregroundColor(.appDarkBrown)
+                                })
+                                .fullScreenCover(isPresented: self.$showCamera) {
+                                    AccessCameraView(selectedImage: self.$selectedImage)
+                                }
+                                
+                                Button(action: {
+                                    isShowTool = false
+                                    //                                let imageSaver = ImageSaver()
+                                    
+                                    
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                        guard let image = self.snapshot() else { return }
+                                        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+                                        isShowTool = true
+                                    }
+                                    
+                                    //                                 self.snapshot()
+                                }, label: {
+                                    Image("download")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 50, height: 50)
+                                        .foregroundColor(.appDarkBrown)
+                                })
+                            }
+                            .offset(y: 400)
+                        }
+                        
+                    }
                     
                 } else {
                     ZStack {
-                        
+                        Image(self.myShots[self.activeImageIndex])
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .onReceive(self.timer) { time in
+                                if self.startTimer {
+                                    if self.activeImageIndex != 4 && self._up {
+                                        self.activeImageIndex += 1
+                                        
+                                        if self.activeImageIndex == 4 {
+                                            self._up = false
+                                        }
+                                        
+                                    } else {
+                                        self.activeImageIndex -= 1
+                                        if self.activeImageIndex == 0 {
+                                            self._up = true
+                                        }
+                                    }
+                                }
+                            }
                     }
-                    .frame(width: geo.size.width / 3, height: geo.size.height / 3)
-                    .background(Color.blue)
-                    .offset(y: -20)
+                    .frame(width: geo.size.width / 1.5, height: geo.size.height / 2)
+                    .background(Color.clear)
+                    .offset(y: -50)
                 }
             }
             .background(Color.yellow)
             .ignoresSafeArea()
-            .toolbar(.hidden)
+            .navigationBarHidden(true)
             .frame(width: geo.size.width, height: geo.size.height)
         }
         .ignoresSafeArea()
         .background(Color.green)
         .onShake {
-            moneyString = viewModel.getMoney(type: lixiType, 0, 0, listText)
-            isGotMoney = true
+            if !isShaked {
+                moneyString = viewModel.getMoney(type: lixiType, 0, 0, listText)
+                isShaked = true
+                let delay = Double.random(in:0.5...1.5)
+                DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                    isGotMoney = true
+                    isShowTool = true
+                    self.audioPlayer.play()
+                }
+            }
 //            viewModel.getMoney(type: .text, 0, 0, listText)
 //            viewModel.getMoney(type: .number, 0, 100)
+        }
+        .onAppear {
+            self.startTimer.toggle()
+            let sound = Bundle.main.path(forResource: "coinDrop", ofType: "mp3")
+            self.audioPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: sound!))
         }
     }
 }
 
 struct CongratulationView: View {
     @State var moneyString: String
+    @Binding var selectedImage: UIImage?
+    @Binding var isShowCamera: Bool
     
     var body: some View {
         GeometryReader { geo in
-            ZStack {
+            VStack {
+                if let selectedImage {
+                    Image(uiImage: selectedImage)
+                        .resizable()
+                        .scaledToFit()
+                        .clipShape(.circle)
+                        .frame(width: geo.size.width/1.5, height: geo.size.width/1.5)
+                        .onTapGesture {
+                            isShowCamera = true
+                        }
+                } else {
+                    Image("defaultImage")
+                        .resizable()
+                        .scaledToFit()
+                        .clipShape(.circle)
+                        .frame(width: geo.size.width/1.5, height: geo.size.width/1.5)
+                        .onTapGesture {
+                            isShowCamera = true
+                        }
+                }
                 Text("\(moneyString)")
-                    .font(.titleFont(.regular, size: 30))
+                    .font(.titleFont(.regular, size: 40))
                     .multilineTextAlignment(.center)
+                    .foregroundColor(.appDarkBrown)
+                Spacer()
             }
             .frame(width: geo.size.width, height: geo.size.height, alignment: .center)
-            .background(Color.pink)
         }
     }
 }
 
+struct AccessCameraView: UIViewControllerRepresentable {
+    
+    @Binding var selectedImage: UIImage?
+    @Environment(\.presentationMode) var isPresented
+    
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .camera
+        imagePicker.allowsEditing = true
+        imagePicker.delegate = context.coordinator
+        return imagePicker
+    }
+    
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {
+        
+    }
+
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(picker: self)
+    }
+}
+
+// Coordinator will help to preview the selected image in the View.
+class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    var picker: AccessCameraView
+    
+    init(picker: AccessCameraView) {
+        self.picker = picker
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let selectedImage = info[.originalImage] as? UIImage else { return }
+        self.picker.selectedImage = selectedImage
+        self.picker.isPresented.wrappedValue.dismiss()
+    }
+}
+
 extension ShakeScreen {
-    @Observable
     class ViewModel {
         func getMoney(type: LiXiType,_ minValue: Int = 0,_ maxValue: Int = 5,_ listText: [String] = []) -> String {
             var money: String = ""
@@ -132,6 +289,7 @@ extension ShakeScreen {
             let priceString = currencyFormatter.string(from: NSNumber(value: money))!
             return priceString
         }
+        
     }
 }
 

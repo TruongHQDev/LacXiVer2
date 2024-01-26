@@ -23,8 +23,10 @@ struct ContentView: View {
                             .frame(height: 70)
                         Text("Lắc Xì")
                             .font(.titleFont(.regular, size: 70))
+                            .foregroundColor(.appDarkBrown)
                         Text("by hqt198 a.k.a Quang Trường")
                             .font(.appFont(.bold, size: 17))
+                            .foregroundColor(.appDarkBrown)
                         Spacer()
                         NavigationLink(destination: ShakeScreen()) {
                             ZStack {
@@ -45,6 +47,7 @@ struct ContentView: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 50, height: 50)
+                                    .foregroundColor(.appDarkBrown)
                             }
                             Spacer()
                                 .frame(width: 40)
@@ -53,6 +56,7 @@ struct ContentView: View {
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 50, height: 50)
+                                    .foregroundColor(.appDarkBrown)
                             }
                         }
                         Spacer()
@@ -61,8 +65,6 @@ struct ContentView: View {
                 }
             }
             .navigationBarHidden(true)
-            .navigationSplitViewStyle(.automatic)
-            
         }
         .ignoresSafeArea()
     }

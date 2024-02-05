@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     
+//    @State var listText: [TextObject] = ["Chúc may mắn nha!", "20.000đ", "5.000đ", "Lại đi!", "5.000đ", "5.000đ", "5.000đ", "5.000đ", "5.000đ", "5.000đ", "5.000đ", "10.000đ", "10.000đ", "10.000đ", "5.000đ", "May mắn lần sau nghen!", "Liu liu!"]
+    @State var listText: [TextObject] = []
+    
     var body: some View {
         ZStack {
             NavigationView {
@@ -28,7 +31,7 @@ struct ContentView: View {
                             .font(.appFont(.bold, size: 17))
                             .foregroundColor(.appDarkBrown)
                         Spacer()
-                        NavigationLink(destination: ShakeScreen()) {
+                        NavigationLink(destination: ShakeScreen(listText: $listText)) {
                             ZStack {
                                 Image("backgroundButton")
                                     .resizable()
@@ -42,7 +45,7 @@ struct ContentView: View {
                         }
                         Spacer()
                         HStack {
-                            NavigationLink(destination: SettingView()) {
+                            NavigationLink(destination: SettingView(listText:$listText, text: "")) {
                                 Image("setting")
                                     .resizable()
                                     .scaledToFit()
@@ -67,5 +70,14 @@ struct ContentView: View {
             .navigationBarHidden(true)
         }
         .ignoresSafeArea()
+        .onAppear(perform: {
+            if let listStr: [String] = UserDefaults.standard.value(forKey: "Data") as? [String] {
+                self.listText.removeAll()
+                for str in listStr {
+                    let text = TextObject(text: str)
+                    self.listText.append(text)
+                }
+            }
+        })
     }
 }

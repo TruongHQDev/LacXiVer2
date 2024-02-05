@@ -10,8 +10,9 @@ import PhotosUI
 import AVKit
 
 struct ShakeScreen: View {
+    @Environment(\.dismiss) var dismiss
     @State private var viewModel = ViewModel()
-    private let listText: [String] = ["Không có gì!", "20.000đ", "50.000đ", "60.000đ","100.000đ", "Lại đi!"]
+    @Binding var listText: [TextObject] //= ["Không có gì!", "20.000đ", "50.000đ", "60.000đ","100.000đ", "Lại đi!"]
     
     @State var isGotMoney = false
     @State var moneyString = ""
@@ -43,7 +44,10 @@ struct ShakeScreen: View {
                     Text("Lắc Xì")
                         .font(.titleFont(.regular, size: 70))
                         .foregroundColor(.appDarkBrown)
-                   Spacer()
+                    Text("by hqt198 a.k.a Quang Trường")
+                        .font(.appFont(.bold, size: 17))
+                        .foregroundColor(.appDarkBrown)
+                    Spacer()
                 }
                 
                 if isGotMoney {
@@ -150,13 +154,14 @@ struct ShakeScreen: View {
                     self.audioPlayer.play()
                 }
             }
-//            viewModel.getMoney(type: .text, 0, 0, listText)
-//            viewModel.getMoney(type: .number, 0, 100)
         }
         .onAppear {
             self.startTimer.toggle()
             let sound = Bundle.main.path(forResource: "coinDrop", ofType: "mp3")
             self.audioPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: sound!))
+        }
+        .onTapGesture(count: 5) {
+            dismiss()
         }
     }
 }
@@ -192,6 +197,7 @@ struct CongratulationView: View {
                     .font(.titleFont(.regular, size: 40))
                     .multilineTextAlignment(.center)
                     .foregroundColor(.appDarkBrown)
+                    .offset(y: -30)
                 Spacer()
             }
             .frame(width: geo.size.width, height: geo.size.height, alignment: .center)
@@ -215,7 +221,7 @@ struct AccessCameraView: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {
         
     }
-
+    
     func makeCoordinator() -> Coordinator {
         return Coordinator(picker: self)
     }
@@ -238,7 +244,7 @@ class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerContro
 
 extension ShakeScreen {
     class ViewModel {
-        func getMoney(type: LiXiType,_ minValue: Int = 0,_ maxValue: Int = 5,_ listText: [String] = []) -> String {
+        func getMoney(type: LiXiType,_ minValue: Int = 0,_ maxValue: Int = 5,_ listText: [TextObject] = []) -> String {
             var money: String = ""
             switch type {
             case .number:
@@ -247,7 +253,7 @@ extension ShakeScreen {
                 break
             case .text:
                 //Custom text which defined at Setting View
-                money = self.randomText(list: listText)
+                money = self.randomText(list: listText).text
                 break
             case .tetDong:
                 //A multiple of 10.000 (10.000 is minimum money by Polyester at Viet Nam
@@ -272,8 +278,12 @@ extension ShakeScreen {
             return "\(randomInt)"
         }
         
-        private func randomText(list: [String]) -> String {
+        private func randomText(list: [TextObject]) -> TextObject {
+            if list.count < 1 {
+                return TextObject(text: "Chúc Mừng Năm Mới!")
+            }
             let randomInt = Int.random(in: 0..<list.count)
+            print("int \(randomInt)")
             let text = list[randomInt]
             return text
         }
@@ -284,7 +294,7 @@ extension ShakeScreen {
             currencyFormatter.numberStyle = .decimal
             // localize to your grouping and decimal separator
             currencyFormatter.locale = Locale.current
-
+            
             // We'll force unwrap with the !, if you've got defined data you may need more error checking
             let priceString = currencyFormatter.string(from: NSNumber(value: money))!
             return priceString

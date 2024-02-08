@@ -28,6 +28,7 @@ struct ShakeScreen: View {
     let timer = Timer.publish(every: 0.15, on: .main, in: .common).autoconnect()
     let myShots = ["charac-1", "charac-2", "charac-3", "charac-4", "charac-5", "charac-6", "charac-7", "charac-8"]
     @State var audioPlayer: AVAudioPlayer!
+    @State var audioBackgroundPlayer: AVAudioPlayer!
     
     var body: some View {
         GeometryReader { geo in
@@ -61,6 +62,7 @@ struct ShakeScreen: View {
                                     isGotMoney = false
                                     isShaked = false
                                     selectedImage = nil
+                                    self.audioBackgroundPlayer.play()
                                 } label: {
                                     Image("refresh")
                                         .resizable()
@@ -151,6 +153,7 @@ struct ShakeScreen: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                     isGotMoney = true
                     isShowTool = true
+                    self.audioBackgroundPlayer.stop()
                     self.audioPlayer.play()
                 }
             }
@@ -158,9 +161,14 @@ struct ShakeScreen: View {
         .onAppear {
             self.startTimer.toggle()
             let sound = Bundle.main.path(forResource: "coinDrop", ofType: "mp3")
+            let backgroundSound = Bundle.main.path(forResource: "backgroundSound", ofType: "mp3")
+            self.audioBackgroundPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: backgroundSound!))
+            self.audioBackgroundPlayer.numberOfLoops = -1
             self.audioPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: sound!))
+            self.audioBackgroundPlayer.play()
         }
         .onTapGesture(count: 5) {
+            self.audioBackgroundPlayer.stop()
             dismiss()
         }
     }

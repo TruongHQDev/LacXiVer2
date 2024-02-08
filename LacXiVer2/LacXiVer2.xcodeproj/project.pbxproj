@@ -12,6 +12,7 @@
 		7B0B15302B5E814600C6F3B0 /* TektonPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7B0B152D2B5E814600C6F3B0 /* TektonPro-Bold.ttf */; };
 		7B0B15312B5E814600C6F3B0 /* TektonPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7B0B152E2B5E814600C6F3B0 /* TektonPro-Regular.ttf */; };
 		7B19D7262B612754005BF805 /* coinDrop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7B19D7252B612754005BF805 /* coinDrop.mp3 */; };
+		7B3703E52B72224E00C77DBC /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3703E42B72224E00C77DBC /* ButtonView.swift */; };
 		7B448F9F2B5BBFAD0088157E /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B448F9E2B5BBFAD0088157E /* SettingView.swift */; };
 		7B448FA12B5BC0690088157E /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B448FA02B5BC0690088157E /* TutorialView.swift */; };
 		7B448FA32B5BD7850088157E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B448FA22B5BD7850088157E /* Extensions.swift */; };
@@ -49,6 +50,7 @@
 		7B0B152D2B5E814600C6F3B0 /* TektonPro-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TektonPro-Bold.ttf"; sourceTree = "<group>"; };
 		7B0B152E2B5E814600C6F3B0 /* TektonPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TektonPro-Regular.ttf"; sourceTree = "<group>"; };
 		7B19D7252B612754005BF805 /* coinDrop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = coinDrop.mp3; sourceTree = "<group>"; };
+		7B3703E42B72224E00C77DBC /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		7B448F9E2B5BBFAD0088157E /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		7B448FA02B5BC0690088157E /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		7B448FA22B5BD7850088157E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				7BB02B8B2B599CA100A1B0AA /* ShakeScreen.swift */,
 				7B448F9E2B5BBFAD0088157E /* SettingView.swift */,
 				7B448FA02B5BC0690088157E /* TutorialView.swift */,
+				7B3703E42B72224E00C77DBC /* ButtonView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				7BB02B612B5999E400A1B0AA /* LacXiVer2App.swift in Sources */,
 				7B448FA12B5BC0690088157E /* TutorialView.swift in Sources */,
 				7BB02B8C2B599CA100A1B0AA /* ShakeScreen.swift in Sources */,
+				7B3703E52B72224E00C77DBC /* ButtonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

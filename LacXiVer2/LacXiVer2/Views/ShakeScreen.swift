@@ -44,7 +44,7 @@ struct ShakeScreen: View {
                     Text("Lắc Xì")
                         .font(.titleFont(.regular, size: 70))
                         .foregroundColor(.appDarkBrown)
-                    Text("by hqt198 a.k.a Quang Trường")
+                    Text("by Quang Trường")
                         .font(.appFont(.bold, size: 17))
                         .foregroundColor(.appDarkBrown)
                     Spacer()

@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
 //    @State var listText: [TextObject] = ["Chúc may mắn nha!", "20.000đ", "5.000đ", "Lại đi!", "5.000đ", "5.000đ", "5.000đ", "5.000đ", "5.000đ", "5.000đ", "5.000đ", "10.000đ", "10.000đ", "10.000đ", "5.000đ", "May mắn lần sau nghen!", "Liu liu!"]
-    @State var listText: [TextObject] = []
+    @State var listText: [TextObject] = [TextObject(text: "10.000đ"), TextObject(text: "20.000đ"), TextObject(text: "50.000đ"), TextObject(text: "Chúc Mừng Năm Mới!")]
     
     var body: some View {
         ZStack {
@@ -71,13 +71,7 @@ struct ContentView: View {
         }
         .ignoresSafeArea()
         .onAppear(perform: {
-            if let listStr: [String] = UserDefaults.standard.value(forKey: "Data") as? [String] {
-                self.listText.removeAll()
-                for str in listStr {
-                    let text = TextObject(text: str)
-                    self.listText.append(text)
-                }
-            }
+
         })
     }
 }

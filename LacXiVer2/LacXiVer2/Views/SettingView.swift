@@ -52,9 +52,10 @@ struct SettingView: View {
                     .frame(height: 30)
                 if isShowAddNewCollection {
                     VStack {
-                        TextField("Enter title", text: $textTitle)
+                        TextField("Enter collection title", text: $textTitle)
                             .background(Color.white)
                             .foregroundColor(Color.black)
+                            .frame(width: 250)
                         HStack {
                             TextField("Enter text", text: $text)
                                 .background(Color.white)
@@ -62,7 +63,7 @@ struct SettingView: View {
                             Button(action: {
                                 let grid = TextObject(text: text)
                                 if grid.text != ""  {
-                                    data.insert(grid, at: 0)
+                                    dataNewCollection.insert(grid, at: 0)
                                 }
                             }) {
                                 Image(systemName: "plus.circle.fill")
@@ -73,7 +74,7 @@ struct SettingView: View {
                             LazyVGrid(columns: gridLayoutNewCollection) {
                                 ForEach(dataNewCollection, id: \.id) { item in
                                     Text(item.text)
-                                        .font(.appFont(.medium, size: 12))
+                                        .font(.appFont(.medium, size: 16))
                                         .foregroundColor(.black)
                                 }
                             }
@@ -81,6 +82,26 @@ struct SettingView: View {
                         .frame(width: 250, height: 300)
                         .background(Color.appBeige.opacity(0.8))
                         .cornerRadius(15.0)
+                        
+                        HStack(alignment: .center, spacing: 40, content: {
+                            Button {
+                                let newCollection = CollectionTextObject(title: textTitle, textObjects: dataNewCollection)
+                                listCollection.insert(newCollection, at: 0)
+                                selectedCollection = listCollection[0].title
+                                self.data = listCollection[0].textObjects
+                                self.listText = self.data
+                                isShowAddNewCollection = false
+                            } label: {
+                                ButtonView(text: "Save", fontSize: 17, width: 100, height: 40)
+                            }
+                            
+                            Button {
+                                isShowAddNewCollection = false
+                            } label: {
+                                ButtonView(text: "Back", fontSize: 15, width: 100, height: 40)
+                            }
+                        })
+                        .frame(width: 400, height: 70)
                     }
                 } else {
                     VStack(spacing: 20) {
@@ -139,7 +160,7 @@ struct SettingView: View {
                             LazyVGrid(columns: gridLayout) {
                                 ForEach(data, id: \.id) { item in
                                     Text(item.text)
-                                        .font(.appFont(.medium, size: 14))
+                                        .font(.appFont(.medium, size: 16))
                                         .foregroundColor(.black)
                                 }
                             }
@@ -153,26 +174,13 @@ struct SettingView: View {
                     .frame(width: 350, height: 340)
                 }
                 Spacer()
-//                HStack(alignment: .center, spacing: 40, content: {
-//                    Button {
-//                        self.listText = data
-//                        var listString: [String] = []
-//                        for str in data {
-//                            listString.append(str.text)
-//                        }
-//                        UserDefaults.standard.set(listString, forKey: "Data")
-//                        dismiss()
-//                    } label: {
-//                        ButtonView(text: "Save", fontSize: 17, width: 100, height: 40)
-//                    }
-//            
-//                    Button {
-//                        self.data.removeAll()
-//                    } label: {
-//                        ButtonView(text: "Remove\nall", fontSize: 15, width: 100, height: 40)
-//                    }
-//                })
-//                .frame(width: 400, height: 70)
+                if !isShowAddNewCollection {
+                    Button {
+                        dismiss()
+                    } label: {
+                        ButtonView(text: "Home", fontSize: 20, width: 150, height: 40)
+                    }
+                }
                 Spacer()
                     .frame(height: 70)
             }
@@ -181,8 +189,7 @@ struct SettingView: View {
         .onAppear(perform: {
             //Load data from db
             self.listCollection.removeAll()
-            self.listCollection.append(CollectionTextObject(title: "Trung Bình", textObjects: [TextObject(text: "abc"), TextObject(text: "xyz")]))
-            self.listCollection.append(CollectionTextObject(title: "Trung Bình 2", textObjects: [TextObject(text: "abc 2"), TextObject(text: "xyz 2")]))
+            self.listCollection.append(CollectionTextObject(title: "Mặc Định", textObjects: [TextObject(text: "10.000đ"), TextObject(text: "20.000đ"), TextObject(text: "50.000đ"), TextObject(text: "Chúc Mừng Năm Mới!")]))
             
             selectedCollection = listCollection.first!.title
             for item in listCollection {

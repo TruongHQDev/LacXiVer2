@@ -149,7 +149,7 @@ struct ShakeScreen: View {
             if !isShaked {
                 moneyString = viewModel.getMoney(type: lixiType, 0, 0, listText)
                 isShaked = true
-                let delay = Double.random(in:0.5...1.5)
+                let delay = Double.random(in:0.5...1)
                 DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                     isGotMoney = true
                     isShowTool = true
@@ -161,7 +161,7 @@ struct ShakeScreen: View {
         .onAppear {
             self.startTimer.toggle()
             let sound = Bundle.main.path(forResource: "coinDrop", ofType: "mp3")
-            let backgroundSound = Bundle.main.path(forResource: "backgroundSound", ofType: "mp3")
+            let backgroundSound = Bundle.main.path(forResource: "nhacXoSo2", ofType: "mp3")
             self.audioBackgroundPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: backgroundSound!))
             self.audioBackgroundPlayer.numberOfLoops = -1
             self.audioPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: sound!))

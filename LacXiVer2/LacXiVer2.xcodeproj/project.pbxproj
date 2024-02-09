@@ -25,6 +25,7 @@
 		7BB02B7F2B5999E700A1B0AA /* LacXiVer2UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB02B7E2B5999E700A1B0AA /* LacXiVer2UITestsLaunchTests.swift */; };
 		7BB02B8C2B599CA100A1B0AA /* ShakeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB02B8B2B599CA100A1B0AA /* ShakeScreen.swift */; };
 		7BE04ACE2B754F6A00A37EEB /* backgroundSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7BE04ACD2B754F6900A37EEB /* backgroundSound.mp3 */; };
+		7BE04AD02B75531000A37EEB /* nhacXoSo2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7BE04ACF2B75531000A37EEB /* nhacXoSo2.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		7BB02B7E2B5999E700A1B0AA /* LacXiVer2UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LacXiVer2UITestsLaunchTests.swift; sourceTree = "<group>"; };
 		7BB02B8B2B599CA100A1B0AA /* ShakeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeScreen.swift; sourceTree = "<group>"; };
 		7BE04ACD2B754F6900A37EEB /* backgroundSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = backgroundSound.mp3; sourceTree = "<group>"; };
+		7BE04ACF2B75531000A37EEB /* nhacXoSo2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = nhacXoSo2.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 				7BB02B642B5999E700A1B0AA /* Assets.xcassets */,
 				7B19D7252B612754005BF805 /* coinDrop.mp3 */,
 				7BE04ACD2B754F6900A37EEB /* backgroundSound.mp3 */,
+				7BE04ACF2B75531000A37EEB /* nhacXoSo2.mp3 */,
 				7B0B15322B5E816E00C6F3B0 /* Font */,
 				7BB02B662B5999E700A1B0AA /* LacXiVer2.entitlements */,
 				7BB02B672B5999E700A1B0AA /* Preview Content */,
@@ -287,6 +290,7 @@
 				7B0B152F2B5E814600C6F3B0 /* TektonPro-Medium.ttf in Resources */,
 				7B0B15302B5E814600C6F3B0 /* TektonPro-Bold.ttf in Resources */,
 				7B0B15312B5E814600C6F3B0 /* TektonPro-Regular.ttf in Resources */,
+				7BE04AD02B75531000A37EEB /* nhacXoSo2.mp3 in Resources */,
 				7BB02B692B5999E700A1B0AA /* Preview Assets.xcassets in Resources */,
 				7B0B152A2B5E79E300C6F3B0 /* UTM-Azuki.ttf in Resources */,
 				7BE04ACE2B754F6A00A37EEB /* backgroundSound.mp3 in Resources */,

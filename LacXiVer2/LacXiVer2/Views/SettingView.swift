@@ -28,7 +28,7 @@ struct SettingView: View {
     @State var data: [TextObject] = [ ]
     var gridLayout = [ GridItem() ]
     @State var isShowAddNewCollection = false
-    @State var listCollection: [CollectionTextObject] = []
+//    @State var listCollection: [CollectionTextObject] = []
     @State private var selectedCollection: String = ""
     @Binding var selectedCollectionModel: CollectionModel
     @State var dataNewCollection: [TextObject] = []
@@ -101,6 +101,9 @@ struct SettingView: View {
                                 listText = data
                                 selectedCollection = textTitle
                                 isShowAddNewCollection = false
+                                textTitle = ""
+                                text = ""
+                                dataNewCollection.removeAll()
                             } label: {
                                 ButtonView(text: "Save", fontSize: 17, width: 100, height: 40)
                             }
@@ -138,28 +141,29 @@ struct SettingView: View {
                                     print("value \(selectedCollection)")
                                     for item in collections {
                                         if item.name == selectedCollection {
-                                            data.removeAll()
                                             selectedCollectionModel = item
-                                            for ob in item.textObjects {
-                                                let text = TextObject(text: ob.text)
-                                                data.append(text)
-                                            }
-                                            self.listText = self.data
+                                            fetchDataFromSelectecCollectionModel()
                                             break
                                         }
                                     }
                                 }
                                 Button(action: {
-                                    for (i, item) in listCollection.enumerated() {
-                                        if item.title == selectedCollection {
-                                            listCollection.remove(at: i)
-                                            if listCollection.count > 0 {
-                                                selectedCollection = listCollection[0].title
+                                    let realm = try! Realm()
+                                    
+                                    try! realm.write {
+                                        // Delete all objects from the realm.
+                                        realm.delete(realm.objects(CollectionModel.self).filter("name=%@", selectedCollectionModel.name))
+
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                                            if collections.count > 0 {
+                                                for collection in collections {
+                                                    selectedCollectionModel = collection
+                                                    fetchDataFromSelectecCollectionModel()
+                                                    return
+                                                }
                                             } else {
-                                                selectedCollection = ""
-                                                data.removeAll()
+                                                resetData()
                                             }
-                                            break
                                         }
                                     }
                                 }, label: {
@@ -210,14 +214,26 @@ struct SettingView: View {
                 }
             }
             selectedCollection = selectedCollectionModel.name
-            for text in selectedCollectionModel.textObjects {
-                let newText = TextObject(text: text.text)
-                data.append(newText)
-            }
-            self.listText = self.data
+            fetchDataFromSelectecCollectionModel()
         })
         .onTapGesture {
             hideKeyboard()
         }
+    }
+    
+    func fetchDataFromSelectecCollectionModel() {
+        data.removeAll()
+        for text in selectedCollectionModel.textObjects {
+            let newText = TextObject(text: text.text)
+            data.append(newText)
+        }
+        self.listText = self.data
+    }
+    
+    func resetData() {
+        selectedCollection = ""
+        selectedCollectionModel = CollectionModel(name: "", textObjects: List<TextModel>())
+        self.data.removeAll()
+        self.listText.removeAll()
     }
 }

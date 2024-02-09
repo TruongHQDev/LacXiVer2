@@ -10,7 +10,9 @@ import SwiftUI
 struct ContentView: View {
     
 //    @State var listText: [TextObject] = ["Chúc may mắn nha!", "20.000đ", "5.000đ", "Lại đi!", "5.000đ", "5.000đ", "5.000đ", "5.000đ", "5.000đ", "5.000đ", "5.000đ", "10.000đ", "10.000đ", "10.000đ", "5.000đ", "May mắn lần sau nghen!", "Liu liu!"]
-    @State var listText: [TextObject] = [TextObject(text: "10.000đ"), TextObject(text: "20.000đ"), TextObject(text: "50.000đ"), TextObject(text: "Chúc Mừng Năm Mới!")]
+//    @State var listText: [TextObject] = [TextObject(text: "10.000đ"), TextObject(text: "20.000đ"), TextObject(text: "50.000đ"), TextObject(text: "Chúc Mừng Năm Mới!")]
+    @State var listText: [TextObject] = []
+    @State var selectedCollectionModel: CollectionModel = CollectionModel()
     
     var body: some View {
         ZStack {
@@ -36,7 +38,7 @@ struct ContentView: View {
                                 Image("backgroundButton")
                                     .resizable()
                                     .scaledToFit()
-                                Text("BẮT ĐẦU")
+                                Text("Start")
                                     .font(.titleFont(.regular, size: 40))
                                     .foregroundColor(Color.appDarkGreen)
                             }
@@ -45,7 +47,7 @@ struct ContentView: View {
                         }
                         Spacer()
                         HStack {
-                            NavigationLink(destination: SettingView(listText:$listText, text: "")) {
+                            NavigationLink(destination: SettingView(listText:$listText, selectedCollectionModel: $selectedCollectionModel)) {
                                 Image("setting")
                                     .resizable()
                                     .scaledToFit()

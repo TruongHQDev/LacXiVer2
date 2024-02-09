@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct TextObject: Identifiable {
     var id = UUID()
@@ -19,15 +20,17 @@ struct CollectionTextObject: Identifiable {
 }
 
 struct SettingView: View {
+    @ObservedResults(CollectionModel.self) var collections
     @Environment(\.dismiss) var dismiss
     @Binding var listText: [TextObject]
-    @State var text: String
+    @State var text: String = ""
     @State var textTitle: String = ""
     @State var data: [TextObject] = [ ]
     var gridLayout = [ GridItem() ]
     @State var isShowAddNewCollection = false
     @State var listCollection: [CollectionTextObject] = []
     @State private var selectedCollection: String = ""
+    @Binding var selectedCollectionModel: CollectionModel
     @State var dataNewCollection: [TextObject] = []
     var gridLayoutNewCollection = [ GridItem() ]
 
@@ -85,11 +88,18 @@ struct SettingView: View {
                         
                         HStack(alignment: .center, spacing: 40, content: {
                             Button {
-                                let newCollection = CollectionTextObject(title: textTitle, textObjects: dataNewCollection)
-                                listCollection.insert(newCollection, at: 0)
-                                selectedCollection = listCollection[0].title
-                                self.data = listCollection[0].textObjects
-                                self.listText = self.data
+                                let newCollect = CollectionModel()
+                                newCollect.name = textTitle
+                                for object in dataNewCollection {
+                                    let model = TextModel(text: object.text)
+                                    newCollect.textObjects.append(model)
+                                }
+                                
+                                $collections.append(newCollect)
+                                selectedCollectionModel = newCollect
+                                data = dataNewCollection
+                                listText = data
+                                selectedCollection = textTitle
                                 isShowAddNewCollection = false
                             } label: {
                                 ButtonView(text: "Save", fontSize: 17, width: 100, height: 40)
@@ -118,18 +128,24 @@ struct SettingView: View {
                                 .foregroundColor(Color.black)
                             if selectedCollection != "" {
                                 Picker("Select Collection", selection: $selectedCollection) {
-                                    ForEach(listCollection, id: \.title) {
-                                        Text($0.title)
+                                    ForEach(collections, id: \.name) {
+                                        Text($0.name)
                                     }
                                 }
                                 .frame(width: 150, height: 40, alignment: .leading)
                                 .pickerStyle(.menu)
                                 .onChange(of: selectedCollection) { value in
                                     print("value \(selectedCollection)")
-                                    for item in listCollection {
-                                        if item.title == selectedCollection {
-                                            self.data = item.textObjects
+                                    for item in collections {
+                                        if item.name == selectedCollection {
+                                            data.removeAll()
+                                            selectedCollectionModel = item
+                                            for ob in item.textObjects {
+                                                let text = TextObject(text: ob.text)
+                                                data.append(text)
+                                            }
                                             self.listText = self.data
+                                            break
                                         }
                                     }
                                 }
@@ -188,16 +204,17 @@ struct SettingView: View {
         .navigationBarHidden(true)
         .onAppear(perform: {
             //Load data from db
-            self.listCollection.removeAll()
-            self.listCollection.append(CollectionTextObject(title: "Mặc Định", textObjects: [TextObject(text: "10.000đ"), TextObject(text: "20.000đ"), TextObject(text: "50.000đ"), TextObject(text: "Chúc Mừng Năm Mới!")]))
-            
-            selectedCollection = listCollection.first!.title
-            for item in listCollection {
-                if item.title == selectedCollection {
-                    self.data = item.textObjects
-                    self.listText = self.data
+            if selectedCollectionModel.textObjects.count < 1 {
+                if let collect = collections.first {
+                    selectedCollectionModel = collect
                 }
             }
+            selectedCollection = selectedCollectionModel.name
+            for text in selectedCollectionModel.textObjects {
+                let newText = TextObject(text: text.text)
+                data.append(newText)
+            }
+            self.listText = self.data
         })
         .onTapGesture {
             hideKeyboard()
